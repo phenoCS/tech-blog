@@ -1,0 +1,395 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================================
+   设计令牌（CSS 变量）—— 全站唯一数据源
+   修改这里即可一键换肤；Tailwind 令牌在 tailwind.config.ts 中镜像。
+   严格遵循 Anthropic 暖色调规范，禁止纯白背景 / 冷色 / 阴影 / 渐变。
+   ========================================================= */
+:root {
+  /* —— 颜色 —— */
+  --color-canvas: #f0eee6; /* 页面背景 */
+  --color-surface: #faf9f5; /* 卡片/面板背景 */
+  --color-featured: #f5e3c7; /* 特色/置顶卡片背景 */
+  --color-ink: #141413; /* 主文字 */
+  --color-muted: #b0aea5; /* 次要文字（辅助、日期） */
+  --color-line: #cccbc8; /* 边框/分割线 */
+  --color-clay: #d97757; /* 主要操作色 */
+  --color-clay-hover: #c6613f; /* Clay 悬停态 */
+
+  /* —— 字体 —— */
+  --font-serif: Georgia, "Source Serif Pro", Charter, "Songti SC",
+    "Noto Serif CJK SC", STSong, SimSun, serif;
+  --font-sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto,
+    "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-mono: "JetBrains Mono", Menlo, Monaco, "Courier New", monospace;
+
+  /* —— 圆角 —— */
+  --radius-card: 24px; /* 卡片圆角 */
+  --radius-btn: 8px; /* 按钮圆角（仅底部） */
+  --radius-code: 4px; /* 行内代码小圆角（4px 倍数） */
+
+  /* —— 布局 —— */
+  --max-width: 1280px; /* 页面最大宽度 */
+  --header-height: 64px; /* 固定导航栏高度 */
+
+  /* —— 间距（4px 的倍数） —— */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px; /* 卡片左右内边距 */
+}
+
+/* ===================== 基础排版 ===================== */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* 正文：衬线体，20px / 行高 1.4，canvas 背景，ink 文字 */
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-serif);
+    font-size: 20px;
+    line-height: 1.4;
+    /* 让页脚可贴底：body 作为纵向 flex 容器且至少占满视口高度 */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  /* 标题：衬线体，阶梯字号 H1 48 / H2 32 / H3 24 */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    line-height: 1.2;
+    /* Anthropic 标题的标志性紧凑字距，让大字更有质感 */
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+    margin: 0 0 var(--space-4);
+  }
+  /* H1 行高收到 1.1，接近 Anthropic 大标题的紧凑观感（仍在规范 1.1–1.3 区间） */
+  h1 {
+    font-size: 48px;
+    line-height: 1.1;
+  }
+  h2 {
+    font-size: 32px;
+    line-height: 1.15;
+  }
+  h3 {
+    font-size: 24px;
+    line-height: 1.2;
+  }
+  h4 {
+    font-size: 20px;
+  }
+  h5,
+  h6 {
+    font-size: 18px;
+  }
+
+  p {
+    margin: 0 0 var(--space-4);
+  }
+
+  ul,
+  ol {
+    margin: 0 0 var(--space-4);
+    padding-left: var(--space-6);
+  }
+  li {
+    margin: 0 0 var(--space-1);
+  }
+
+  /* 内联链接（正文里）：始终带下划线，主文字色，悬停变 Clay */
+  .markdown-body a {
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .markdown-body a:hover {
+    color: var(--color-clay);
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid var(--color-line);
+    margin: var(--space-8) 0;
+  }
+
+  blockquote {
+    margin: 0 0 var(--space-4);
+    padding: var(--space-2) var(--space-4);
+    border-left: 1px solid var(--color-line);
+    color: var(--color-muted);
+  }
+
+  /* 行内代码 */
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--color-surface);
+    padding: 2px 6px;
+    border-radius: var(--radius-code);
+  }
+  /* 代码块：surface 背景 + 1px 描边，无阴影，无语法高亮配色（避免冷色） */
+  pre {
+    margin: 0 0 var(--space-4);
+    padding: var(--space-4);
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-btn);
+    overflow-x: auto;
+  }
+  pre code {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    font-size: 16px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 0 var(--space-4);
+  }
+  th,
+  td {
+    border: 1px solid var(--color-line);
+    padding: var(--space-2) var(--space-3);
+    text-align: left;
+  }
+  th {
+    background: var(--color-surface);
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* 内容区链接兜底：统一去蓝、常驻下划线、悬停变 Clay。
+     导航 .site-nav a / 页脚 .site-footer a / 按钮 .button-primary 各有更高优先级的类，
+     不受影响（仍保持无下划线的 UI 形态）。 */
+  a {
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  a:hover {
+    color: var(--color-clay);
+  }
+
+  /* 文本选区高亮：使用品牌暖色（象牙黄），避免浏览器默认的蓝色选区 */
+  ::selection {
+    background: var(--color-featured);
+    color: var(--color-ink);
+  }
+
+  /* 键盘聚焦轮廓：暖色 Clay，替代浏览器默认的蓝色描边（无障碍友好） */
+  :focus-visible {
+    outline: 2px solid var(--color-clay);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+/* ===================== 组件样式 ===================== */
+@layer components {
+  /* 页面主体：为固定导航栏留出顶部空间；flex-grow 撑开剩余空间，把页脚顶到最底部 */
+  .site-main {
+    padding-top: var(--header-height);
+    flex-grow: 1;
+  }
+  /* 居中容器：最大宽度 1280px */
+  .site-container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--space-8) var(--space-6);
+  }
+
+  /* 导航栏：固定在顶部，canvas 背景，底部一条分割线 */
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    height: var(--header-height);
+    background: var(--color-canvas);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .site-header-inner {
+    max-width: var(--max-width);
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 var(--space-6);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  /* 站点标题（UI 元素）：无衬线、无下划线 */
+  .site-title {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+  /* 导航链接：无衬线 12px，无下划线，悬停出现下划线 */
+  .site-nav {
+    display: flex;
+    gap: var(--space-6);
+    font-family: var(--font-sans);
+    font-size: 12px;
+  }
+  .site-nav a {
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+  .site-nav a:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  /* 文章列表 */
+  .post-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+  /* 文章卡片：surface 背景，24px 圆角，无阴影；默认透明描边，悬停时显暖色边框 */
+  .post-list-item {
+    display: block;
+    background: var(--color-surface);
+    border-radius: var(--radius-card);
+    /* 上下 32px，左右 48px，避免文字贴边 */
+    padding: var(--space-8) var(--space-12);
+    color: var(--color-ink);
+    text-decoration: none;
+    border: 1px solid transparent;
+  }
+  .post-list-item:hover {
+    border-color: var(--color-line);
+  }
+  /* 特色/置顶卡片：列表首项使用象牙黄 featured 背景（不改 HTML 结构） */
+  .post-list > li:first-child .post-list-item {
+    background: var(--color-featured);
+  }
+  /* 卡片标题（UI 元素）：衬线 32px，默认无下划线，悬停出现 */
+  .post-list-item .post-title {
+    font-family: var(--font-serif);
+    font-size: 32px;
+    margin: 0 0 var(--space-2);
+    text-decoration: none;
+  }
+  .post-list-item:hover .post-title {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .post-list-item .post-excerpt {
+    color: var(--color-ink);
+    margin: 0;
+  }
+
+  /* 次要文字（日期等）：无衬线 12px，muted 色 */
+  .post-date {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    color: var(--color-muted);
+    margin: 0 0 var(--space-3);
+  }
+
+  /* 主要操作按钮：Clay 填充 + 白色文字，只有底部 8px 圆角（顶部直角） */
+  .button-primary {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    background: var(--color-clay);
+    color: #ffffff;
+    text-decoration: none;
+    padding: var(--space-3) var(--space-6);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: var(--radius-btn);
+    border-bottom-right-radius: var(--radius-btn);
+  }
+  .button-primary:hover {
+    background: var(--color-clay-hover);
+  }
+
+  /* 页脚：深色 ink 背景 + surface 文字；mt-auto 确保内容不足时仍贴底 */
+  .site-footer {
+    background: var(--color-ink);
+    color: var(--color-surface);
+    margin-top: auto;
+  }
+  .site-footer-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--space-6);
+    font-family: var(--font-sans);
+    font-size: 12px;
+  }
+  .site-footer a {
+    color: var(--color-muted);
+    text-decoration: none;
+  }
+  .site-footer a:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* 文章详情头部 */
+  .post-header {
+    /* 居中显示，并与正文同宽；左右留 24px 舒适边距 */
+    max-width: 720px;
+    margin: 0 auto var(--space-8);
+    padding: 0 24px;
+  }
+  .post-header h1 {
+    margin: 0 0 var(--space-3);
+  }
+
+  /* 正文排版容器：覆盖全局标题阶梯，避免与页面标题重复过大。
+     约束阅读宽度约 720px，长行更易读（仍在 1280px 容器之内）。 */
+  .markdown-body {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    line-height: 1.4;
+    color: var(--color-ink);
+    /* 居中显示，左右留 24px 舒适边距 */
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .markdown-body h1 {
+    font-size: 32px;
+  }
+  .markdown-body h2 {
+    font-size: 24px;
+  }
+  .markdown-body h3,
+  .markdown-body h4,
+  .markdown-body h5,
+  .markdown-body h6 {
+    font-size: 20px;
+  }
+  .markdown-body > *:last-child {
+    margin-bottom: 0;
+  }
+}
