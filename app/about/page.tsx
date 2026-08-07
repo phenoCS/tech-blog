@@ -7,10 +7,13 @@ export default function AboutPage() {
   return (
     <>
       <h1>关于我</h1>
-      <p>这里是「关于我」页面的占位内容，方便你后续修改。</p>
+      <p>phenoCS，河南科技大学 计算机科学与技术</p>
       <p>
-        你可以在此介绍自己的背景、擅长的技术领域、正在做的事情，以及联系方式（邮箱、GitHub、社交账号等）。
+        感兴趣于AI算力隐私 AI生态
       </p>
+      <p><a href="https://github.com/phenoCS">我的github主页,欢迎关注</a></p>
+
+      
     </>
   );
 }
