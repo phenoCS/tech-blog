@@ -15,6 +15,7 @@ export interface PostMeta {
   title: string;
   date: string;
   excerpt: string;
+  tags: string[];
 }
 
 // 单篇文章（含渲染后的 HTML 正文）
@@ -22,9 +23,30 @@ export interface Post extends PostMeta {
   contentHtml: string;
 }
 
+// 标签聚合信息（名称 + 出现次数），用于首页筛选栏
+export interface TagInfo {
+  name: string;
+  count: number;
+}
+
 // 读取目录下所有 .md 文件名
 function getPostFiles(): string[] {
   return fs.readdirSync(POSTS_DIR).filter((file) => file.endsWith('.md'));
+}
+
+// 从 front matter 解析标签：支持数组（["a","b"]）或逗号分隔字符串（"a, b"）
+function parseTags(data: Record<string, unknown>): string[] {
+  const raw = data.tags;
+  if (Array.isArray(raw)) {
+    return raw.map((t) => String(t).trim()).filter(Boolean);
+  }
+  if (typeof raw === 'string') {
+    return raw
+      .split(',')
+      .map((t) => t.trim())
+      .filter(Boolean);
+  }
+  return [];
 }
 
 // 从 Markdown 正文生成前 50 字摘要（去掉代码块与标记符号）
@@ -59,9 +81,28 @@ export function getAllPosts(): PostMeta[] {
         title: (data.title as string) ?? slug,
         date: (data.date as string) ?? '',
         excerpt: buildExcerpt(content),
+        tags: parseTags(data),
       };
     })
     .sort((a, b) => (a.date < b.date ? 1 : -1));
+}
+
+// 获取所有标签及其出现次数，按次数倒序、同名按中文排序
+export function getAllTags(): TagInfo[] {
+  const counts = new Map<string, number>();
+  for (const post of getAllPosts()) {
+    for (const tag of post.tags) {
+      counts.set(tag, (counts.get(tag) ?? 0) + 1);
+    }
+  }
+  return Array.from(counts.entries())
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name, 'zh'));
+}
+
+// 根据标签筛选文章（按日期倒序）
+export function getPostsByTag(tag: string): PostMeta[] {
+  return getAllPosts().filter((post) => post.tags.includes(tag));
 }
 
 // 根据 slug 获取单篇文章（含渲染后的 HTML 正文）
@@ -78,6 +119,7 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
     title: (data.title as string) ?? slug,
     date: (data.date as string) ?? '',
     excerpt: buildExcerpt(content),
+    tags: parseTags(data),
     contentHtml,
   };
 }

@@ -37,6 +37,18 @@ export default async function PostPage({
       <header className="post-header">
         <h1>{post.title}</h1>
         <p className="post-date">{formatDate(post.date)}</p>
+        {/* 标签：点击跳转到首页按该标签筛选 */}
+        {post.tags.length > 0 && (
+          <ul className="post-tags post-tags--detail">
+            {post.tags.map((tag) => (
+              <li key={tag}>
+                <Link href={`/?tag=${encodeURIComponent(tag)}`} className="tag">
+                  {tag}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
       </header>
 
       {/* 正文（已渲染的 Markdown HTML） */}

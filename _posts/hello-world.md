@@ -2,6 +2,7 @@
 title: "Hello World：这个博客的第一篇文章"
 date: "2026-07-12"
 slug: "hello-world"
+tags: ["入门", "杂记"]
 ---
 
 这是本站的第一篇文章，用来验证 Markdown 读取、解析与渲染链路是否正常工作。

@@ -2,6 +2,7 @@
 title: "Next.js App Router 的几个关键概念"
 date: "2026-07-28"
 slug: "nextjs-app-router-notes"
+tags: ["Next.js", "前端"]
 ---
 
 App Router 与过去的 Pages Router 差异不小，下面是我在实践中最常用到的几个概念。

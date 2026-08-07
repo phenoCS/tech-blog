@@ -290,20 +290,92 @@
   .post-list > li:first-child .post-list-item {
     background: var(--color-featured);
   }
-  /* 卡片标题（UI 元素）：衬线 32px，默认无下划线，悬停出现 */
+  /* 卡片标题（UI 元素）：衬线 32px */
   .post-list-item .post-title {
     font-family: var(--font-serif);
     font-size: 32px;
     margin: 0 0 var(--space-2);
+  }
+  /* 标题链接：默认无下划线，悬停出现 */
+  .post-list-item .post-title-link {
+    color: var(--color-ink);
     text-decoration: none;
   }
-  .post-list-item:hover .post-title {
+  .post-list-item:hover .post-title-link {
     text-decoration: underline;
     text-underline-offset: 3px;
   }
   .post-list-item .post-excerpt {
     color: var(--color-ink);
     margin: 0;
+  }
+
+  /* 标签筛选栏：横向 flex，自动换行 */
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0 0 var(--space-8);
+  }
+  /* 文章卡片 / 详情页内的标签列表 */
+  .post-tags {
+    list-style: none;
+    margin: var(--space-4) 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .post-tags--detail {
+    margin-top: var(--space-3);
+  }
+  /* 标签胶囊：无衬线小字、1px 描边，悬停变 Clay；选中态 Clay 填充 */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    line-height: 1;
+    color: var(--color-muted);
+    background: transparent;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-btn);
+    padding: 6px 12px;
+    text-decoration: none;
+  }
+  .tag:hover {
+    color: var(--color-clay);
+    border-color: var(--color-clay);
+  }
+  .tag.is-active {
+    color: #ffffff;
+    background: var(--color-clay);
+    border-color: var(--color-clay);
+  }
+  .tag.is-active:hover {
+    background: var(--color-clay-hover);
+    border-color: var(--color-clay-hover);
+  }
+  .tag-count {
+    font-size: 10px;
+    opacity: 0.7;
+  }
+  /* 筛选提示文案（仅首页有标签筛选时出现） */
+  .tag-filter-note {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--color-muted);
+    margin: 0 0 var(--space-6);
+  }
+  .tag-filter-note a {
+    margin-left: var(--space-2);
+    color: var(--color-clay);
+    text-decoration: none;
+  }
+  .tag-filter-note a:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
   }
 
   /* 次要文字（日期等）：无衬线 12px，muted 色 */

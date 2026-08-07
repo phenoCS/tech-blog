@@ -2,6 +2,7 @@
 title: "把样式集中管理：设计令牌与分层 CSS"
 date: "2026-08-02"
 slug: "css-layers-and-design-tokens"
+tags: ["CSS", "设计系统"]
 ---
 
 如果希望一个站点将来能被整体换肤，那么从第一天起就该约定：**组件不写样式**。
