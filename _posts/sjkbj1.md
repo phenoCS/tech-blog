@@ -60,3 +60,49 @@ create table 表名 (
 ```
 
 `comment "xxx"` 是注释。
+
+## DDL部分总结
+
+1.数据库操作
+
+```sql
+show databases;
+create database 数据库名;
+use 数据库名;
+select database();
+drop database if exists 数据库名;
+```
+
+2.表操作
+
+```sql
+show tables;
+create tables 表名(字段 字段类型 , 字段 字段类型);
+desc 表名;
+show create table 表名;
+alter table 表名 add/modify/change/drop/rename to ;
+drop 表名;
+```
+
+实操例子:
+
+```sql
+mysql -u root -p
+show databases;
+use itcast;
+desc yuan_gong_biao;
+alter table yuan_gong_biao modify nickname varchar(20);
+alter table yuan_gong_biao change nickname username varchar(25) comment "用户名";
+alter table yuan_gong_biao drop username;
+alter table yuan_gong_biao rename to y_g_b;
+create table niubi(
+    -> id int comment"名字"
+    -> );
+drop table if exists niubi;
+```
+
+
+
+
+
+
