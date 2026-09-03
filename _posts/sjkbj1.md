@@ -77,7 +77,7 @@ drop database if exists 数据库名;
 
 ```sql
 show tables;
-create tables 表名(字段 字段类型 , 字段 字段类型);
+create table 表名(字段 字段类型 , 字段 字段类型);
 desc 表名;
 show create table 表名;
 alter table 表名 add/modify/change/drop/rename to ;
