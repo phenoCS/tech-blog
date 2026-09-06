@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import '@/styles/globals.css';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
+import ReadingProgress from '@/components/ReadingProgress';
 import { siteConfig } from '@/lib/site-config';
 
 // 站点级 <title>：子页面可用 template 自动追加站点名
@@ -22,6 +23,13 @@ export default function RootLayout({
   return (
     <html lang="zh-CN">
       <head>
+        {/* 无闪烁：在首屏绘制前同步高级感主题状态，避免刷新时闪一下 */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(localStorage.getItem('premium-theme')==='on'){document.documentElement.classList.add('premium');}}catch(e){}",
+          }}
+        />
         {/* 引入 Inter / JetBrains Mono 网络字体；离线时自动回退到 system-ui / Menlo */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
@@ -38,6 +46,7 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <ReadingProgress />
         <SiteHeader />
         <main className="site-main">
           <div className="site-container">{children}</div>

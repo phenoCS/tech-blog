@@ -465,3 +465,85 @@
     margin-bottom: 0;
   }
 }
+
+/* =========================================================
+   高级感主题（默认关闭）：仅在 <html> 带 .premium 类时生效。
+   原版样式完全不被修改，关闭后瞬间还原当前简洁版。
+   设计取向：克制、暖色、不花哨，贴合技术博客调性。
+   ========================================================= */
+/* 顶栏毛玻璃：半透明 + 背景模糊，内容从下方透出 */
+html.premium .site-header {
+  background: rgba(240, 238, 230, 0.65);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+}
+
+/* 文章卡片：入场淡入 + 悬停轻微上浮（带柔和暖色投影，仅高级感模式出现） */
+html.premium .post-list-item {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: premiumFadeUp 0.6s ease forwards;
+  transition: transform 0.25s ease, box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+html.premium .post-list-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(20, 20, 19, 0.08);
+  border-color: var(--color-line);
+}
+/* 卡片依次浮现，制造层次感 */
+html.premium .post-list > li:nth-child(1) .post-list-item { animation-delay: 0.05s; }
+html.premium .post-list > li:nth-child(2) .post-list-item { animation-delay: 0.12s; }
+html.premium .post-list > li:nth-child(3) .post-list-item { animation-delay: 0.19s; }
+html.premium .post-list > li:nth-child(4) .post-list-item { animation-delay: 0.26s; }
+html.premium .post-list > li:nth-child(5) .post-list-item { animation-delay: 0.33s; }
+html.premium .post-list > li:nth-child(n + 6) .post-list-item { animation-delay: 0.4s; }
+
+@keyframes premiumFadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 站点标题：克制的暖色渐变文字（墨黑 → Clay），提升精致感 */
+html.premium .site-title {
+  background: linear-gradient(90deg, var(--color-ink), var(--color-clay));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* 阅读进度条：顶部细线，随滚动增长；默认隐藏，仅高级感模式显示 */
+.premium-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: var(--color-clay);
+  z-index: 100;
+  transition: width 0.1s linear;
+  display: none;
+}
+html.premium .premium-progress {
+  display: block;
+}
+
+/* 开关按钮：沿用顶栏无衬线小字风格，低调不抢戏 */
+.premium-toggle {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  line-height: 1;
+  color: var(--color-muted);
+  background: transparent;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-btn);
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.premium-toggle:hover {
+  color: var(--color-clay);
+  border-color: var(--color-clay);
+}

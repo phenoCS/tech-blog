@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { siteConfig } from '@/lib/site-config';
+import PremiumToggle from './PremiumToggle';
 
 // 站点头部：固定在页面顶部，包含站点标题与导航链接
 export default function SiteHeader() {
@@ -17,6 +18,7 @@ export default function SiteHeader() {
               {item.label}
             </Link>
           ))}
+          <PremiumToggle />
         </nav>
       </div>
     </header>
