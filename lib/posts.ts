@@ -5,6 +5,8 @@ import { remark } from 'remark';
 import remarkGfm from 'remark-gfm';
 import remarkRehype from 'remark-rehype';
 import rehypeStringify from 'rehype-stringify';
+import rehypeSlug from 'rehype-slug';
+import rehypeHighlight from 'rehype-highlight';
 
 // Markdown 文章目录
 const POSTS_DIR = path.join(process.cwd(), '_posts');
@@ -19,8 +21,17 @@ export interface PostMeta {
 }
 
 // 单篇文章（含渲染后的 HTML 正文）
+export interface TocItem {
+  id: string;
+  text: string;
+  level: number;
+}
+
 export interface Post extends PostMeta {
   contentHtml: string;
+  toc: TocItem[];
+  readingMinutes: number;
+  wordCount: number;
 }
 
 // 标签聚合信息（名称 + 出现次数），用于首页筛选栏
@@ -64,9 +75,41 @@ export async function renderMarkdown(markdown: string): Promise<string> {
   const file = await remark()
     .use(remarkGfm) // 支持 GFM（表格、删除线、任务列表等）
     .use(remarkRehype)
+    .use(rehypeSlug) // 给标题加锚点 id，供 TOC 跳转
+    .use(rehypeHighlight) // 语法高亮 token（默认版无配色，视觉不变）
     .use(rehypeStringify)
     .process(markdown);
   return String(file);
+}
+
+// 从渲染后的 HTML 中提取 h2/h3 作为目录（依赖 rehype-slug 生成的 id）
+function extractToc(html: string): TocItem[] {
+  const items: TocItem[] = [];
+  const re = /<h([23])\s+id="([^"]+)"[^>]*>(.*?)<\/h\1>/g;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(html))) {
+    const level = Number(m[1]);
+    const id = m[2];
+    const text = m[3].replace(/<[^>]+>/g, '').trim();
+    if (text) items.push({ id, text, level });
+  }
+  return items;
+}
+
+// 估算阅读时长（分钟）与字数（中文字符 + 英文词）
+function buildReadStats(content: string): {
+  readingMinutes: number;
+  wordCount: number;
+} {
+  const text = content
+    .replace(/```[\s\S]*?```/g, '')
+    .replace(/[#>*_`~\-]/g, ' ')
+    .trim();
+  const cjk = (text.match(/[一-龥]/g) || []).length;
+  const en = (text.match(/[A-Za-z0-9]+/g) || []).length;
+  const wordCount = cjk + en;
+  const readingMinutes = Math.max(1, Math.round(wordCount / 300));
+  return { readingMinutes, wordCount };
 }
 
 // 获取所有文章元信息，按发布日期倒序排列（用于首页列表）
@@ -114,6 +157,7 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
   const { data, content } = matter(raw);
   const contentHtml = await renderMarkdown(content);
 
+  const { readingMinutes, wordCount } = buildReadStats(content);
   return {
     slug,
     title: (data.title as string) ?? slug,
@@ -121,5 +165,8 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
     excerpt: buildExcerpt(content),
     tags: parseTags(data),
     contentHtml,
+    toc: extractToc(contentHtml),
+    readingMinutes,
+    wordCount,
   };
 }

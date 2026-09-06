@@ -3,6 +3,7 @@ import '@/styles/globals.css';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import ReadingProgress from '@/components/ReadingProgress';
+import BackToTop from '@/components/BackToTop';
 import { siteConfig } from '@/lib/site-config';
 
 // 站点级 <title>：子页面可用 template 自动追加站点名
@@ -47,6 +48,7 @@ export default function RootLayout({
       </head>
       <body>
         <ReadingProgress />
+        <BackToTop />
         <SiteHeader />
         <main className="site-main">
           <div className="site-container">{children}</div>

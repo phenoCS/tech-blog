@@ -4,6 +4,9 @@ import type { Metadata } from 'next';
 import { getAllPosts, getPostBySlug } from '@/lib/posts';
 import { formatDate } from '@/lib/date';
 import MarkdownContent from '@/components/MarkdownContent';
+import TableOfContents from '@/components/TableOfContents';
+import EnhanceCode from '@/components/EnhanceCode';
+import Lightbox from '@/components/Lightbox';
 
 // 静态生成所有文章的路由
 export async function generateStaticParams() {
@@ -49,10 +52,18 @@ export default async function PostPage({
             ))}
           </ul>
         )}
+
+        <div className="reading-meta">
+          约 {post.readingMinutes} 分钟 · {post.wordCount} 字
+        </div>
       </header>
 
       {/* 正文（已渲染的 Markdown HTML） */}
       <MarkdownContent html={post.contentHtml} />
+
+      <TableOfContents toc={post.toc} />
+      <EnhanceCode />
+      <Lightbox />
 
       {/* 主要操作：返回首页（Clay 按钮，仅底部圆角） */}
       <p style={{ marginTop: '32px' }}>

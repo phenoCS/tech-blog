@@ -575,3 +575,235 @@ html.premium .about-name {
     background-position: 200% center;
   }
 }
+
+/* =========================================================
+   高级感增强功能（默认关闭，仅 html.premium 下生效）
+   ========================================================= */
+
+/* 代码块容器相对定位，供复制按钮定位 */
+.markdown-body pre {
+  position: relative;
+}
+
+/* 复制按钮：默认隐藏，高级感模式悬停代码块时显示 */
+.copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  line-height: 1;
+  color: var(--color-muted);
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-btn);
+  padding: 4px 8px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  display: none;
+}
+html.premium .copy-btn {
+  display: inline-block;
+}
+html.premium .markdown-body pre:hover .copy-btn {
+  opacity: 1;
+}
+.copy-btn:hover {
+  color: var(--color-clay);
+  border-color: var(--color-clay);
+}
+
+/* 阅读时长 + 字数统计：默认隐藏，高级感模式显示 */
+.reading-meta {
+  display: none;
+  margin-top: var(--space-3);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--color-muted);
+}
+html.premium .reading-meta {
+  display: block;
+}
+
+/* 文章目录（悬浮小地图）：固定右侧，仅宽屏 + 高级感模式显示 */
+.toc {
+  display: none;
+}
+html.premium .toc {
+  display: block;
+  position: fixed;
+  top: 96px;
+  right: 24px;
+  width: 200px;
+  max-height: 70vh;
+  overflow-y: auto;
+  padding: var(--space-4);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+@media (max-width: 1100px) {
+  html.premium .toc {
+    display: none;
+  }
+}
+.toc-title {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.toc ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.toc a {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--color-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  border-left: 2px solid transparent;
+  padding-left: 8px;
+}
+.toc a:hover {
+  color: var(--color-ink);
+}
+.toc a.is-active {
+  color: var(--color-clay);
+  border-left-color: var(--color-clay);
+}
+.toc .toc-sub a {
+  padding-left: 18px;
+  font-size: 12px;
+}
+
+/* 返回顶部按钮：默认隐藏，高级感模式滚动后出现 */
+.back-to-top {
+  display: none;
+}
+html.premium .back-to-top {
+  display: inline-flex;
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--color-ink);
+  background: rgba(240, 238, 230, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--color-line);
+  border-radius: 999px;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+html.premium .back-to-top.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* 灯箱：图片点击放大 */
+.lightbox {
+  display: none;
+}
+html.premium .lightbox {
+  display: flex;
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 20, 19, 0.8);
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  cursor: zoom-out;
+  padding: var(--space-6);
+}
+html.premium .lightbox img {
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: var(--radius);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+/* 链接下划线从左滑入 */
+html.premium .markdown-body a {
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.3s ease, color 0.2s ease;
+}
+html.premium .markdown-body a:hover {
+  background-size: 100% 1px;
+}
+
+/* 平滑滚动 + 标题锚点不被固定顶栏遮挡 */
+html.premium {
+  scroll-behavior: smooth;
+}
+html.premium .markdown-body h2,
+html.premium .markdown-body h3 {
+  scroll-margin-top: calc(80px + 16px);
+}
+
+/* 页面切换淡入 */
+html.premium .markdown-body,
+html.premium .post-list {
+  animation: premiumFadeIn 0.5s ease;
+}
+@keyframes premiumFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 语法高亮配色（仅高级感模式；暖色为主，避免冷色突兀） */
+html.premium .hljs {
+  color: var(--color-ink);
+  background: transparent;
+}
+html.premium .hljs-keyword,
+html.premium .hljs-selector-tag,
+html.premium .hljs-built_in,
+html.premium .hljs-literal {
+  color: var(--color-clay);
+}
+html.premium .hljs-string,
+html.premium .hljs-attr,
+html.premium .hljs-template-tag {
+  color: #6aa9c9;
+}
+html.premium .hljs-comment {
+  color: var(--color-muted);
+  font-style: italic;
+}
+html.premium .hljs-number {
+  color: #b07cc6;
+}
+html.premium .hljs-title,
+html.premium .hljs-function .hljs-title,
+html.premium .hljs-section {
+  color: #d98a3d;
+}
+html.premium .hljs-params {
+  color: var(--color-ink);
+}
