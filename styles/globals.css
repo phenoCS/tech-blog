@@ -547,3 +547,27 @@ html.premium .premium-progress {
   color: var(--color-clay);
   border-color: var(--color-clay);
 }
+
+/* 关于我页面名字：流光炫彩动态渐变（仅高级感模式生效） */
+html.premium .about-name {
+  display: inline-block;
+  font-weight: 700;
+  background: linear-gradient(
+    100deg,
+    var(--color-clay),
+    #e0a458,
+    #6aa9c9,
+    #b07cc6,
+    var(--color-clay)
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: aboutNameFlow 4s linear infinite;
+}
+@keyframes aboutNameFlow {
+  to {
+    background-position: 200% center;
+  }
+}

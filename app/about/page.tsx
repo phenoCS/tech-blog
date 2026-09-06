@@ -7,7 +7,10 @@ export default function AboutPage() {
   return (
     <>
       <h1>关于我</h1>
-      <p>phenoCS，河南科技大学 计算机科学与技术</p>
+      <p>
+        <span className="about-name">phenoCS</span>
+        ，河南科技大学 计算机科学与技术
+      </p>
       <p>
         感兴趣于AI算力隐私 AI生态
       </p>
