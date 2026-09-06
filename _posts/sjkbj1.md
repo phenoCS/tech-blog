@@ -101,6 +101,59 @@ create table niubi(
 drop table if exists niubi;
 ```
 
+## DML部分总结
+
+```sql
+insert into (字段1,字段2  ) values (值1,值2 ),(值1,值2  );   --添加数据
+
+update 表名 set 字段1 = 值1 , 字段2 = 值2 where 条件;        --修改数据
+
+delete from 表名 where 条件;                                --删除数据
+```
+
+## DQL部分总结 
+
+```sql
+
+select 字段列表 from 表名 where 条件列表 group by 分组字段列表 having 分组后条件列表 group by 排序字段列表;
+
+```
+
+```text
+dql查询十分重要 
+
+升序默认asc，降序desc
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
