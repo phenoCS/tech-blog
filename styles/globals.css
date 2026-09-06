@@ -250,6 +250,7 @@
   /* 导航链接：无衬线 12px，无下划线，悬停出现下划线 */
   .site-nav {
     display: flex;
+    align-items: center;
     gap: var(--space-6);
     font-family: var(--font-sans);
     font-size: 12px;
@@ -532,6 +533,9 @@ html.premium .premium-progress {
 
 /* 开关按钮：沿用顶栏无衬线小字风格，低调不抢戏 */
 .premium-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-family: var(--font-sans);
   font-size: 12px;
   line-height: 1;
@@ -539,7 +543,7 @@ html.premium .premium-progress {
   background: transparent;
   border: 1px solid var(--color-line);
   border-radius: var(--radius-btn);
-  padding: 6px 12px;
+  padding: 4px 10px;
   cursor: pointer;
   transition: color 0.2s ease, border-color 0.2s ease;
 }
