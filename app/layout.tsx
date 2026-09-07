@@ -5,6 +5,7 @@ import SiteFooter from '@/components/SiteFooter';
 import ReadingProgress from '@/components/ReadingProgress';
 import BackToTop from '@/components/BackToTop';
 import { Analytics } from '@vercel/analytics/react';
+import Clarity from '@/components/Clarity';
 import { siteConfig } from '@/lib/site-config';
 
 // 站点级 <title>：子页面可用 template 自动追加站点名
@@ -56,6 +57,7 @@ export default function RootLayout({
         </main>
         <SiteFooter />
         <Analytics />
+        <Clarity />
       </body>
     </html>
   );
