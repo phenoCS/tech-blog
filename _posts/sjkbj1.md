@@ -126,6 +126,59 @@ dql查询十分重要
 ```
 
 
+## DCL部分总结
+
+
+```sql
+用户管理：
+create user '用户名'@'主机名' indentified by '密码';   --添加用户
+alter user '用户名'@'主机名' identified with mysql_native_password by '密码';   --更改密码
+drop user '用户名'@'主机名';   --删除用户
+
+权限控制：
+grant 权限列表 on 数据库名.表名 to '用户名'@'主机名';
+revoke 权限列表 on 数据库名.表名 from '用户名'@'主机名';
+```
+
+## 函数
+
+
+```sql
+字符串：
+concat , lower , upper ,lpad(左填充),rpad(右填充) , trim substring
+数值函数：
+ceil , floor , mod , rand , round
+日期函数：
+curdate , curtime , now , year , month , day , date ,date_add , datediff
+流程函数：
+if , ifnull case [  ]  when then else end;
+```
+
+## 约束
+
+
+```sql
+not null   --非空
+unique    --唯一
+primary key (auto_increment)   --主键
+default   --默认
+check   --检查
+foreign key   --外键
+ALTER TABLE 表名 ADD CONSTRAINT 外键名称 FOREIGN KEY(外键字段名) REFERENCES 主表(表列名); 
+--外键语法
+alter table 表名 drop foreign key 外键名称;
+--删除外键
+-- 外键是为了确保表可以与另外一张表关联，确保数据完整性
+```
+
+
+学到这里的心得体会：
+进入mysql之后先查看现在有多少个数据库，除了默认库之外建库，在库里再建表，可以建多张表
+建表的时候可以运用约束来确定主键，一般用自增，可以用约束条件来约束后面表格内容，建好表之后插入数据才是一张完整的表格，然后可以选择添加外键。接下来就是对数据库表的操作，比如查询，
+简单来说，前置操作就是： 建表 -> 插数据 ->添加外键
+
+
+
 
 
 
