@@ -10,8 +10,8 @@ tags: ["计算机", "数据库"]
 ## 启动与连接
 
 ```text
-net start mysql80     // 启动数据库
-mysql -u root -p      // 打开数据库
+net start mysql80     # 启动数据库
+mysql -u root -p      # 打开数据库
 ```
 
 MySQL 里面可以创建很多数据库，注意用 `;` 作为命令结尾。
@@ -104,25 +104,67 @@ drop table if exists niubi;
 ## DML部分总结
 
 ```sql
-insert into (字段1,字段2  ) values (值1,值2 ),(值1,值2  );   --添加数据
+insert into 表名 (字段1,字段2  ) values (值1,值2 ),(值1,值2  );   --添加数据
 
 update 表名 set 字段1 = 值1 , 字段2 = 值2 where 条件;        --修改数据
 
 delete from 表名 where 条件;                                --删除数据
 ```
 
-## DQL部分总结 
+## DQL部分总结
+
+DQL（数据查询）是日常用得最频繁的部分。标准语法顺序：
 
 ```sql
-
-select 字段列表 from 表名 where 条件列表 group by 分组字段列表 having 分组后条件列表 group by 排序字段列表;
-
+select 字段列表
+from 表名
+where 条件列表
+group by 分组字段列表
+having 分组后条件列表
+order by 排序字段列表
+limit 起始位置, 查询条数;
 ```
 
-```text
-dql查询十分重要 
+> 注意：排序用 `order by`（不是 group by）；`limit` 用于分页，`limit 0,5` 表示从第 1 条起取 5 条。
 
-升序默认asc，降序desc
+### 基础查询
+```sql
+select * from emp;                              -- 查所有员工
+select name, salary from emp;                  -- 只查姓名和薪资
+```
+
+### where 条件
+```sql
+select * from emp where age > 30;              -- 年龄大于30
+select name, salary from emp where job = '开发'; -- 开发岗的姓名和薪资
+```
+
+### 聚合函数（count/sum/avg/max/min）
+```sql
+select count(*) from emp;                      -- 员工总数
+select max(salary), min(salary) from emp;      -- 最高/最低薪资
+select avg(salary) from emp;                   -- 平均薪资
+```
+
+### group by + having（分组统计）
+```sql
+select dept_id, count(*) from emp group by dept_id;                        -- 每个部门几个人
+select dept_id, avg(salary) from emp
+  group by dept_id having avg(salary) > 5000;                             -- 平均薪资超5000的部门
+```
+
+### order by + limit（排序与分页）
+```sql
+select name, salary from emp order by salary desc;   -- 按薪资降序（从高到低）
+select * from emp order by age asc limit 5;          -- 年龄最小的5个人
+```
+> 升序默认 `asc`，降序 `desc`。
+
+### 多表 join（借助外键关联 emp 与 dept）
+```sql
+select e.name 员工, d.name 部门
+from emp e
+left join dept d on e.dept_id = d.id;     -- 查出每个员工属于哪个部门
 ```
 
 
@@ -131,7 +173,7 @@ dql查询十分重要
 
 ```sql
 用户管理：
-create user '用户名'@'主机名' indentified by '密码';   --添加用户
+create user '用户名'@'主机名' identified by '密码';   --添加用户
 alter user '用户名'@'主机名' identified with mysql_native_password by '密码';   --更改密码
 drop user '用户名'@'主机名';   --删除用户
 
