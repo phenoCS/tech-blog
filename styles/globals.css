@@ -57,6 +57,11 @@
     font-family: var(--font-serif);
     font-size: 20px;
     line-height: 1.4;
+    /* 数字统一为"等高数字"（lining figures）：
+       Georgia 默认是旧式数字（old-style），0/1/2 矮、3/4/5/7/9 带下伸尾巴，
+       中英混排时同一串数字高低错落、看着"歪"；这里强制对齐到基线。 */
+    font-variant-numeric: lining-nums;
+    font-feature-settings: "lnum" 1;
     /* 让页脚可贴底：body 作为纵向 flex 容器且至少占满视口高度 */
     display: flex;
     flex-direction: column;
