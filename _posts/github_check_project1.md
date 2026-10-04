@@ -2,23 +2,14 @@
 title: "GitHub项目品鉴1"
 date: "2026-10-04"
 slug: "github_check_project1"
-tags: ["计算机，GitHub"]
+tags: ["计算机", "GitHub"]
 ---
 
 # Freetoken项目评审报告
 
 > 评审方式：联网核对官方文档（`docs/install.md`、`docs/quickstart.md`、README）、GitHub Issues（实时抓取）、第三方实测文章后撰写。
 > 评审立场：毒舌但讲证据，只站在「普通用户下载后能不能不折腾就用得好」的角度打分。
-
-**仓库快照（抓取自 GitHub 仓库页，2026-10）**
-
-| 指标 | 数值 |
-| --- | --- |
-| Star | 14.1k |
-| Fork | 1.4k |
-| Issues | 212 |
-| PRs | 169 |
-| 许可证 | Apache-2.0 |
+> 仓库快照：⭐ 14.1k / 🍴 1.4k / Issues 212 / PRs 169 / 许可证 Apache-2.0（抓取自 GitHub 仓库页，2026-10）。
 
 ---
 
