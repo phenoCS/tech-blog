@@ -140,8 +140,10 @@
     font-family: var(--font-mono);
     font-size: 0.9em;
     background: var(--color-surface);
-    padding: 2px 6px;
+    /* 用 em 内边距 + middle 对齐，修复中文与等宽代码混排时数字/代码"翘起"的歪斜感 */
+    padding: 0.12em 0.4em;
     border-radius: var(--radius-code);
+    vertical-align: middle;
   }
   /* 代码块：surface 背景 + 1px 描边，无阴影，无语法高亮配色（避免冷色） */
   pre {
